@@ -1,10 +1,10 @@
-"use client";
+'use client';
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose } from "react-icons/io5";
 
-const Modal = ({ isOpen, onClose, title, children, className = "" }) => {
-  
+const Modal = ({ isOpen, onClose, title, user, className = "" }) => {
+
   const overlayRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +18,6 @@ const Modal = ({ isOpen, onClose, title, children, className = "" }) => {
     return () => document.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-  
   useEffect(() => {
     document.body.classList.toggle('overflow-hidden', isOpen);
     return () => document.body.classList.remove('overflow-hidden');
@@ -57,7 +56,18 @@ const Modal = ({ isOpen, onClose, title, children, className = "" }) => {
 
             {/* Body */}
             <div className="flex-1 ultra-thin-scrollbar light overflow-y-auto text-gray-700 max-h-[calc(90vh-120px)]">
-              {children}
+              {user && (
+                <>
+                  <img
+                    src={user.picture.large}
+                    alt="User"
+                    className="w-32 h-32 rounded-full mx-auto mb-4"
+                  />
+                  <p className="text-center font-semibold">{`${user.name.first} ${user.name.last}`}</p>
+                  <p className="text-center text-sm text-gray-600">{user.email}</p>
+                  <p className="text-center text-sm text-gray-600">{user.location.city}, {user.location.country}</p>
+                </>
+              )}
             </div>
           </motion.div>
         </motion.div>

@@ -1,5 +1,6 @@
-"use client"
+'use client';
 import React from 'react';
+
 function UsersTable({ users, onImageClick }) {
   return (
     <div className="p-4">
@@ -21,7 +22,7 @@ function UsersTable({ users, onImageClick }) {
                   src={user.picture.thumbnail}
                   alt="User"
                   className="w-12 h-12 rounded-full mx-auto cursor-pointer hover:scale-110 transition"
-                  onClick={() => onImageClick(user.picture.large)}
+                  onClick={() => onImageClick(user)}  // Pass the full user object
                 />
               </td>
               <td className="border px-4 py-2">

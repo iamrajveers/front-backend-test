@@ -3,13 +3,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import UsersTable from '@/components/UserTable';
 import Modal from '@/components/Modal';
+
 export default function Home() {
   const [users, setUsers] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedUser, setSelectedUser] = useState(null); 
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredUsers = users.filter(user =>
+    `${user.name.first} ${user.name.last}`.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
-    axios.get('https://randomuser.me/api/?results=10')
+    axios.get('https://randomuser.me/api/?results=5')
       .then((response) => {
         setUsers(response.data.results);
       })
@@ -18,21 +25,28 @@ export default function Home() {
       });
   }, []);
 
-
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
+  const handleImageClick = (user) => {
+    setSelectedUser(user);  
     setIsOpen(true);
   };
 
-
   return (
-    <div className="min-h-screen flex items-center justify-center p-8">
-      <UsersTable users={users} onImageClick={handleImageClick} />
+    <div className="p-5">
+      <input
+        type="text"
+        placeholder="Search by name"
+        className="mb-4 p-2 border rounded w-full"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
+      <UsersTable users={filteredUsers} onImageClick={handleImageClick} />
+
       <Modal
         isOpen={isOpen}
-        imageUrl={selectedImage}
         onClose={() => setIsOpen(false)}
-        title={'Images'}
+        title={'User Details'}
+        user={selectedUser}  
       />
     </div>
   );
