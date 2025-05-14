@@ -25,10 +25,14 @@ export default function Home() {
       });
   }, []);
 
+
+
   const handleImageClick = (user) => {
     setSelectedUser(user);  
     setIsOpen(true);
   };
+
+
 
   return (
     <div className="p-5">
@@ -48,6 +52,9 @@ export default function Home() {
         title={'User Details'}
         user={selectedUser}  
       />
+
+
+
     </div>
   );
 }

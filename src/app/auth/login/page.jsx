@@ -44,6 +44,7 @@ export default function Login() {
   const handleCreateAccount = () => {
     router.push('/auth/signup');
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center">
